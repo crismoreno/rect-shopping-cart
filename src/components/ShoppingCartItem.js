@@ -1,6 +1,10 @@
 import React from "react";
 
 function ShoppingCartItem(props) {
+  const removeClick = () => {
+    props.handleRemove(props.id);
+  };
+
   return (
     <div className="col shopping__cart__item">
       <div className="row flex-column">
@@ -44,7 +48,7 @@ function ShoppingCartItem(props) {
                       <button
                         type="btn"
                         className="btn btn-dark"
-                        onClick={props.handleRemove}
+                        onClick={removeClick}
                       >
                         Remove
                       </button>

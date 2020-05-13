@@ -25,8 +25,19 @@ function App() {
     populateStatefromStorage();
   }, []);
 
-  function handleRemove() {
-    console.log("remove");
+  function handleRemove(prodId) {
+    // const stateIndex = cartInState.findIndex(
+    //   (element) => element.id === prodId
+    // );
+    const storageIndex = currentCartInClient.findIndex(
+      (element) => element.id === prodId
+    );
+    if (storageIndex > -1) {
+      currentCartInClient.splice(storageIndex, 1);
+      localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
+      //UPDATE STATE
+      updateCartInState(currentCartInClient);
+    }
   }
 
   function handleAdd(prodId) {
@@ -40,7 +51,7 @@ function App() {
   }
 
   function handleChange() {
-    console.log("change?");
+    console.log("handleChange");
   }
 
   return (
@@ -77,6 +88,7 @@ function App() {
               <ShoppingCartItem
                 title={product.title}
                 price={product.price}
+                id={product.id}
                 cartInState={cartInState}
                 key={index}
                 img={product.img}
