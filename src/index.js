@@ -6,11 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./assets/App.scss";
 
-import ProductCard from "./components/ProductCard";
-import { Aside } from "./components/aside";
+// import ProductCard from "./components/ProductCard";
+import { Aside } from "./components/Aside";
+import { Catalog } from "./components/Catalog";
 
 import { computePrice } from "././helpers/computePrice";
-import { countDuplicates } from "././helpers/countDuplicates";
+// import { countDuplicates } from "././helpers/countDuplicates";
 
 import products from "./productsService";
 
@@ -72,21 +73,11 @@ const App = () => {
             <div className="col">
               <h1 className="mb-4">Shop</h1>
             </div>
-            <div className="col">
-              <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-                {products.map((product, index) => (
-                  <ProductCard
-                    img={product.img}
-                    title={product.title}
-                    key={index}
-                    qty={countDuplicates(product.id, cartInState)}
-                    price={product.price}
-                    id={product.id}
-                    handleAddToCart={handleAdd}
-                  />
-                ))}
-              </div>
-            </div>
+            <Catalog
+              products={products}
+              handleAdd={handleAdd}
+              cartInState={cartInState}
+            />
           </section>
         </div>
         <Aside
