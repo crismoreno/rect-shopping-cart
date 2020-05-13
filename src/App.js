@@ -19,28 +19,25 @@ function App() {
     const initialCartInState = localStorage.getItem("cartInClient")
       ? JSON.parse(localStorage.getItem("cartInClient"))
       : [];
-
-    function populateStatefromStorage() {
-      if (!localStorage.getItem("cartInClient"))
-        localStorage.setItem("cartInClient", "[]");
-      updateCartInState(initialCartInState);
-    }
-    populateStatefromStorage();
-
-    function computePrice() {
-      let price = 0;
-      const arrayWithoutOccurrances = removeDuplicates(
-        initialCartInState,
-        "id"
-      );
-      arrayWithoutOccurrances.forEach((product, index) => {
-        return (price +=
-          countDuplicates(product.id, initialCartInState) * product.price);
-      });
-      comput(price);
-    }
-    computePrice();
+    populateStatefromStorage(initialCartInState);
+    computePrice(initialCartInState);
   }, []);
+
+  function populateStatefromStorage(initialState) {
+    if (!localStorage.getItem("cartInClient"))
+      localStorage.setItem("cartInClient", "[]");
+    updateCartInState(initialState);
+  }
+
+  function computePrice(initialState) {
+    let price = 0;
+    const arrayWithoutOccurrances = removeDuplicates(initialState, "id");
+    arrayWithoutOccurrances.forEach((product, index) => {
+      return (price +=
+        countDuplicates(product.id, initialState) * product.price);
+    });
+    comput(price);
+  }
 
   function handleRemove(prodId) {
     const indexArray = [];
