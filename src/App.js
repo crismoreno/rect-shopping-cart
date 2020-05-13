@@ -26,9 +26,6 @@ function App() {
   }, []);
 
   function handleRemove(prodId) {
-    // const stateIndex = cartInState.findIndex(
-    //   (element) => element.id === prodId
-    // );
     const storageIndex = currentCartInClient.findIndex(
       (element) => element.id === prodId
     );
@@ -41,15 +38,6 @@ function App() {
   }
 
   function handleAdd(prodId) {
-    // const isAlreadyInState = cartInState.filter((product) => {
-    //   return product.id === prodId;
-    // });
-    // const isAlreadyInClient = currentCartInClient.filter((product) => {
-    //   return product.id === prodId;
-    // });
-    // if(isAlreadyInState && isAlreadyInClient){
-
-    // }else{
     const productToAddToCart = products.filter((product) => {
       return product.id === prodId;
     });
@@ -57,18 +45,11 @@ function App() {
     localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
     //UPDATE STATE
     updateCartInState(currentCartInClient);
-    // }
   }
 
   function handleChange() {
     console.log("handleChange");
   }
-
-  // function calculateQty() {
-  //   new Array() = cartInState.filter(function (element) {
-  //     return !toRemove.includes(el);
-  //   });
-  // }
 
   function removeDuplicates(originalArray, prop) {
     var newArray = [];

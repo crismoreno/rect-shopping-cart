@@ -8,7 +8,7 @@ function ProductCard(props) {
   let addToCartButton;
   if (props.qty >= 10) {
     addToCartButton = (
-      <button className="btn btn-dark disabled" onClick={addToCart}>
+      <button className="btn btn-dark disabled" onClick={addToCart} disabled>
         Add to cart
       </button>
     );
