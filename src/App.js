@@ -131,6 +131,7 @@ function App() {
                     img={product.img}
                     title={product.title}
                     key={index}
+                    qty={countDuplicates(product.id)}
                     price={product.price}
                     id={product.id}
                     handleAddToCart={handleAdd}
