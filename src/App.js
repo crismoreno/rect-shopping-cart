@@ -25,16 +25,17 @@ function App() {
     populateStatefromStorage();
   }, []);
 
-  function handleRemove(prodId) {
-    const storageIndex = currentCartInClient.findIndex(
-      (element) => element.id === prodId
-    );
-    if (storageIndex > -1) {
-      currentCartInClient.splice(storageIndex, 1);
-      localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
-      //UPDATE STATE
-      updateCartInState(currentCartInClient);
+  function handleRemove(prodId) {∫
+    const indexArray = [];
+    currentCartInClient.forEach((element, index) => {
+      if (element.id === prodId) indexArray.push(index);
+    });
+    while (indexArray.length) {
+      currentCartInClient.splice(indexArray.pop(), 1);
     }
+    localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
+    //UPDATE STATE
+    updateCartInState(currentCartInClient);
   }
 
   function handleAdd(prodId) {
@@ -72,8 +73,6 @@ function App() {
     return countOcurrences.length;
   }
 
-  // console.log()
-
   let cartLook;
   if (cartInState.length) {
     cartLook = removeDuplicates(cartInState, "id").map((product, index) => (
@@ -92,7 +91,7 @@ function App() {
   } else {
     cartLook = (
       <div className="col">
-        <p className="text-warning">The cart is empty</p>
+        <p className="text-warning">Cart is empty</p>
       </div>
     );
   }
