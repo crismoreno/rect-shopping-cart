@@ -1,13 +1,7 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 import "./App.scss";
-
-// import img_1 from "./img/img_1.jpeg";
-// import img_2 from "./img/img_2.jpeg";
-// import img_3 from "./img/img_3.jpeg";
-// import img_4 from "./img/img_4.jpeg";
-// import img_5 from "./img/img_5.jpeg";
-// import img_6 from "./img/img_6.jpeg";
 
 import ProductCard from "./components/ProductCard";
 import ShoppingCartItem from "./components/ShoppingCartItem";
@@ -15,12 +9,38 @@ import ShoppingCartItem from "./components/ShoppingCartItem";
 import products from "./products";
 
 function App() {
+  const defaultCart = [];
+  const [cartInState, updateCartInState] = useState(defaultCart);
+  const currentCartInClient = JSON.parse(localStorage.getItem("cartInClient"));
+
+  useEffect(() => {
+    function populateStatefromStorage() {
+      if (!localStorage.getItem("cartInClient"))
+        localStorage.setItem("cartInClient", "[]");
+      const initialCartInState = localStorage.getItem("cartInClient")
+        ? JSON.parse(localStorage.getItem("cartInClient"))
+        : [];
+      updateCartInState(initialCartInState);
+    }
+    populateStatefromStorage();
+  }, []);
+
   function handleRemove() {
-    console.log("handleRemove");
+    console.log("remove");
+  }
+
+  function handleAdd(prodId) {
+    const productToAddToCart = products.filter((product) => {
+      return product.id === prodId;
+    });
+    currentCartInClient.push(productToAddToCart[0]);
+    localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
+    //UPDATE STATE
+    updateCartInState(currentCartInClient);
   }
 
   function handleChange() {
-    console.log("handleChange");
+    console.log("change?");
   }
 
   return (
@@ -33,14 +53,14 @@ function App() {
             </div>
             <div className="col">
               <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-                {products.map((product) => (
+                {products.map((product, index) => (
                   <ProductCard
                     img={product.img}
                     title={product.title}
+                    key={index}
                     price={product.price}
-                    handleAddToCart={() => {
-                      console.log("Add to cart");
-                    }}
+                    id={product.id}
+                    handleAddToCart={handleAdd}
                   />
                 ))}
               </div>
@@ -53,14 +73,17 @@ function App() {
               <h2 className="h3 mt-2">Shopping Cart</h2>
               <hr className="mb-3" />
             </div>
-
-            <ShoppingCartItem
-              title="Nike Runner 2000"
-              price={88}
-              // img={img_1}
-              handleRemove={handleRemove}
-              handleChange={handleChange}
-            />
+            {cartInState.map((product, index) => (
+              <ShoppingCartItem
+                title={product.title}
+                price={product.price}
+                cartInState={cartInState}
+                key={index}
+                img={product.img}
+                handleRemove={handleRemove}
+                handleChange={handleChange}
+              />
+            ))}
             <div className="col shopping__cart__footer">
               <div className="row row-cols-1 flex-column">
                 <div className="col">
