@@ -11,42 +11,36 @@ const products = [
     title: "Nike Runner 2000",
     price: 88,
     img: img_1,
-    qty: 1,
   },
   {
     id: 101,
     title: "Puma 80's",
     price: 109,
     img: img_2,
-    qty: 1,
   },
   {
     id: 102,
     title: "Nike Rev Lite",
     price: 66,
     img: img_3,
-    qty: 1,
   },
   {
     id: 103,
     title: "Nike Air",
     price: 129,
     img: img_4,
-    qty: 1,
   },
   {
     id: 104,
     title: "Adidas Run Kit",
     price: 199,
     img: img_5,
-    qty: 1,
   },
   {
     id: 105,
     title: "Adidas Flyer",
     price: 59,
     img: img_6,
-    qty: 1,
   },
 ];
 

@@ -10,22 +10,39 @@ import products from "./products";
 
 function App() {
   const defaultCart = [];
+  const defaultPrice = 0;
   const [cartInState, updateCartInState] = useState(defaultCart);
+  const [computed, comput] = useState(defaultPrice);
   const currentCartInClient = JSON.parse(localStorage.getItem("cartInClient"));
 
   useEffect(() => {
+    const initialCartInState = localStorage.getItem("cartInClient")
+      ? JSON.parse(localStorage.getItem("cartInClient"))
+      : [];
+
     function populateStatefromStorage() {
       if (!localStorage.getItem("cartInClient"))
         localStorage.setItem("cartInClient", "[]");
-      const initialCartInState = localStorage.getItem("cartInClient")
-        ? JSON.parse(localStorage.getItem("cartInClient"))
-        : [];
       updateCartInState(initialCartInState);
     }
     populateStatefromStorage();
+
+    function computePrice() {
+      let price = 0;
+      const arrayWithoutOccurrances = removeDuplicates(
+        initialCartInState,
+        "id"
+      );
+      arrayWithoutOccurrances.forEach((product, index) => {
+        return (price +=
+          countDuplicates(product.id, initialCartInState) * product.price);
+      });
+      comput(price);
+    }
+    computePrice();
   }, []);
 
-  function handleRemove(prodId) {∫
+  function handleRemove(prodId) {
     const indexArray = [];
     currentCartInClient.forEach((element, index) => {
       if (element.id === prodId) indexArray.push(index);
@@ -66,8 +83,8 @@ function App() {
     return newArray;
   }
 
-  function countDuplicates(id) {
-    var countOcurrences = cartInState.filter((element) => {
+  function countDuplicates(id, array) {
+    var countOcurrences = array.filter((element) => {
       return element.id === id;
     });
     return countOcurrences.length;
@@ -81,7 +98,7 @@ function App() {
         price={product.price}
         id={product.id}
         key={index}
-        qty={countDuplicates(product.id)}
+        qty={countDuplicates(product.id, cartInState)}
         // qty={.count(2)}
         img={product.img}
         handleRemove={handleRemove}
@@ -111,7 +128,7 @@ function App() {
                     img={product.img}
                     title={product.title}
                     key={index}
-                    qty={countDuplicates(product.id)}
+                    qty={countDuplicates(product.id, cartInState)}
                     price={product.price}
                     id={product.id}
                     handleAddToCart={handleAdd}
@@ -134,7 +151,7 @@ function App() {
                   <div className="d-flex justify-content-between">
                     <h4 className="h5">Total</h4>
                     <h4>
-                      <strong>306€</strong>
+                      <strong>{computed}€</strong>
                     </h4>
                   </div>
                   <hr />
