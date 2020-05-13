@@ -31,6 +31,7 @@ function ShoppingCartItem(props) {
                       <select
                         className="custom-select"
                         onChange={props.handleChange}
+                        value={props.qty}
                       >
                         <option value="1">1</option>
                         <option value="2">2</option>

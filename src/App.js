@@ -41,6 +41,15 @@ function App() {
   }
 
   function handleAdd(prodId) {
+    // const isAlreadyInState = cartInState.filter((product) => {
+    //   return product.id === prodId;
+    // });
+    // const isAlreadyInClient = currentCartInClient.filter((product) => {
+    //   return product.id === prodId;
+    // });
+    // if(isAlreadyInState && isAlreadyInClient){
+
+    // }else{
     const productToAddToCart = products.filter((product) => {
       return product.id === prodId;
     });
@@ -48,21 +57,52 @@ function App() {
     localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
     //UPDATE STATE
     updateCartInState(currentCartInClient);
+    // }
   }
 
   function handleChange() {
     console.log("handleChange");
   }
 
+  // function calculateQty() {
+  //   new Array() = cartInState.filter(function (element) {
+  //     return !toRemove.includes(el);
+  //   });
+  // }
+
+  function removeDuplicates(originalArray, prop) {
+    var newArray = [];
+    var lookupObject = {};
+
+    for (var i in originalArray) {
+      lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for (i in lookupObject) {
+      newArray.push(lookupObject[i]);
+    }
+    return newArray;
+  }
+
+  function countDuplicates(id) {
+    var countOcurrences = cartInState.filter((element) => {
+      return element.id === id;
+    });
+    return countOcurrences.length;
+  }
+
+  // console.log()
+
   let cartLook;
   if (cartInState.length) {
-    cartLook = cartInState.map((product, index) => (
+    cartLook = removeDuplicates(cartInState, "id").map((product, index) => (
       <ShoppingCartItem
         title={product.title}
         price={product.price}
         id={product.id}
-        cartInState={cartInState}
         key={index}
+        qty={countDuplicates(product.id)}
+        // qty={.count(2)}
         img={product.img}
         handleRemove={handleRemove}
         handleChange={handleChange}
@@ -107,20 +147,6 @@ function App() {
               <hr className="mb-3" />
             </div>
             {cartLook}
-            {/* if(cartInState.length)
-            {cartInState.map((product, index) => (
-              <ShoppingCartItem
-                title={product.title}
-                price={product.price}
-                id={product.id}
-                cartInState={cartInState}
-                key={index}
-                img={product.img}
-                handleRemove={handleRemove}
-                handleChange={handleChange}
-              />
-            ))}
-            else{<p>The cart is empty</p>} */}
             <div className="col shopping__cart__footer">
               <div className="row row-cols-1 flex-column">
                 <div className="col">
