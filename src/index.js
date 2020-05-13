@@ -50,19 +50,22 @@ const App = () => {
     comput(computePrice(currentCartInClient));
   };
 
-  const handleAdd = (prodId) => {
+  const handleAdd = (prodId, qty) => {
     const productToAddToCart = products.filter((product) => {
       return product.id === prodId;
     });
-    currentCartInClient.push(productToAddToCart[0]);
+    for (var i = 0; i < qty; i++) {
+      currentCartInClient.push(productToAddToCart[0]);
+    }
     localStorage.setItem("cartInClient", JSON.stringify(currentCartInClient));
     //UPDATE STATE
     updateCartInState(currentCartInClient);
     comput(computePrice(currentCartInClient));
   };
 
-  const handleChange = () => {
-    console.log("handleChange");
+  const handleChange = (prodId, qty) => {
+    handleRemove(prodId);
+    handleAdd(prodId, qty);
   };
 
   return (

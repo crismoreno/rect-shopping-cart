@@ -34,7 +34,7 @@ const ShoppingCartItem = ({
                 </div>
                 <div className="col mt-auto">
                   <div className="row">
-                    <ChangeQty handleChange={handleChange} qty={qty} />
+                    <ChangeQty handleChange={handleChange} qty={qty} id={id} />
                     <RemoveFromCartButton handleRemove={handleRemove} id={id} />
                   </div>
                 </div>

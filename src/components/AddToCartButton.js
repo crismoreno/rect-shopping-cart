@@ -2,7 +2,7 @@ import React from "react";
 
 const AddToCartButton = ({ qty, handleAddToCart, id }) => {
   const addToCart = () => {
-    handleAddToCart(id);
+    handleAddToCart(id, 1);
   };
 
   let addToCartButton;
