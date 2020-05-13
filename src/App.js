@@ -54,6 +54,28 @@ function App() {
     console.log("handleChange");
   }
 
+  let cartLook;
+  if (cartInState.length) {
+    cartLook = cartInState.map((product, index) => (
+      <ShoppingCartItem
+        title={product.title}
+        price={product.price}
+        id={product.id}
+        cartInState={cartInState}
+        key={index}
+        img={product.img}
+        handleRemove={handleRemove}
+        handleChange={handleChange}
+      />
+    ));
+  } else {
+    cartLook = (
+      <div className="col">
+        <p className="text-warning">The cart is empty</p>
+      </div>
+    );
+  }
+
   return (
     <main className="container-fluid">
       <div className="row">
@@ -84,6 +106,8 @@ function App() {
               <h2 className="h3 mt-2">Shopping Cart</h2>
               <hr className="mb-3" />
             </div>
+            {cartLook}
+            {/* if(cartInState.length)
             {cartInState.map((product, index) => (
               <ShoppingCartItem
                 title={product.title}
@@ -96,6 +120,7 @@ function App() {
                 handleChange={handleChange}
               />
             ))}
+            else{<p>The cart is empty</p>} */}
             <div className="col shopping__cart__footer">
               <div className="row row-cols-1 flex-column">
                 <div className="col">
