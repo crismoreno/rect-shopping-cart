@@ -1,6 +1,7 @@
 import React from "react";
 
 import { RemoveFromCartButton } from "./RemoveFromCartButton";
+import { ChangeQty } from "./ChangeQty";
 
 const ShoppingCartItem = ({
   img,
@@ -33,34 +34,8 @@ const ShoppingCartItem = ({
                 </div>
                 <div className="col mt-auto">
                   <div className="row">
-                    <div className="col col-6 col-lg-4">
-                      <select
-                        className="custom-select"
-                        onChange={handleChange}
-                        value={qty}
-                      >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                      </select>
-                    </div>
+                    <ChangeQty handleChange={handleChange} qty={qty} />
                     <RemoveFromCartButton handleRemove={handleRemove} id={id} />
-                    {/* <div className="col col-6 col-lg-8">
-                      <button
-                        type="btn"
-                        className="btn btn-dark"
-                        onClick={removeClick}
-                      >
-                        Remove
-                      </button>
-                    </div> */}
                   </div>
                 </div>
               </div>
