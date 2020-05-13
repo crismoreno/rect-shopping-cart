@@ -4,12 +4,12 @@ import ReactDOM from "react-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import "./App.scss";
+import "./assets/App.scss";
 
 import ProductCard from "./components/ProductCard";
-import ShoppingCartItem from "./components/ShoppingCartItem";
+import { Aside } from "./components/aside";
+
 import { computePrice } from "././helpers/computePrice";
-import { removeDuplicates } from "././helpers/removeDuplicates";
 import { countDuplicates } from "././helpers/countDuplicates";
 
 import products from "./productsService";
@@ -64,29 +64,6 @@ const App = () => {
     console.log("handleChange");
   };
 
-  let cartLook;
-  if (cartInState.length) {
-    cartLook = removeDuplicates(cartInState, "id").map((product, index) => (
-      <ShoppingCartItem
-        title={product.title}
-        price={product.price}
-        id={product.id}
-        key={index}
-        qty={countDuplicates(product.id, cartInState)}
-        // qty={.count(2)}
-        img={product.img}
-        handleRemove={handleRemove}
-        handleChange={handleChange}
-      />
-    ));
-  } else {
-    cartLook = (
-      <div className="col">
-        <p className="text-warning">Cart is empty</p>
-      </div>
-    );
-  }
-
   return (
     <main className="container-fluid">
       <div className="row">
@@ -112,36 +89,12 @@ const App = () => {
             </div>
           </section>
         </div>
-        <aside className="col col-6 col-lg-4 p-4">
-          <div className="row flex-column">
-            <div className="col shopping__cart__header">
-              <h2 className="h3 mt-2">Shopping Cart</h2>
-              <hr className="mb-3" />
-            </div>
-            {cartLook}
-            <div className="col shopping__cart__footer">
-              <div className="row row-cols-1 flex-column">
-                <div className="col">
-                  <div className="d-flex justify-content-between">
-                    <h4 className="h5">Total</h4>
-                    <h4>
-                      <strong>{computed}€</strong>
-                    </h4>
-                  </div>
-                  <hr />
-                </div>
-                <div className="col">
-                  <button
-                    type="btn"
-                    className="btn btn-primary btn-block btn-lg"
-                  >
-                    Checkout
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
+        <Aside
+          cartInState={cartInState}
+          handleRemove={handleRemove}
+          handleChange={handleChange}
+          computed={computed}
+        />
       </div>
     </main>
   );
